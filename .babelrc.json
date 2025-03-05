@@ -1,0 +1,31 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "entry",
+        "corejs": {
+          "version": "3.9",
+          "proposals": true
+        },
+        "targets": {
+          "chrome": "50",
+          "edge": "17",
+          "firefox": "44",
+          "opera": "42"
+        }
+      }
+    ],
+    [
+      "minify",
+      {
+        "builtIns": false,
+        "removeConsole": false
+      }
+    ]
+  ],
+  "comments": false,
+  "ignore": [
+    "plugins/captcha/altcha/media/js/*.min.js"
+  ]
+}

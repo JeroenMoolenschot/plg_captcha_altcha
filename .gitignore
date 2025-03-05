@@ -1,2 +1,3 @@
+/node_modules/**
+/plugins/captcha/altcha/vendor/**
 /release/**
-/plugins/captcha/altcha/vendor

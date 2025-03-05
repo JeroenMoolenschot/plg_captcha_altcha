@@ -1,8 +1,16 @@
 {
 	"name": "akeeba/plg_captcha_google",
+	"type": "project",
 	"description": "Joomla! plugin to implement ALTCHA, the Open Source, proof-of-work, self-hosted CAPTCHA alternative",
-	"minimum-stability": "stable",
+	"keywords": [
+		"joomla",
+		"plugin",
+		"captcha",
+		"altcha"
+	],
+	"homepage": "https://github.com/akeeba/plg_captcha_altcha",
 	"license": "GPL-3.0-or-later",
+	"minimum-stability": "stable",
 	"authors": [
 		{
 			"name": "Nicholas K. Dionysopoulos",
@@ -10,6 +18,18 @@
 			"homepage": "http://www.akeeba.com",
 			"role": "Lead Developer"
 
+		}
+	],
+	"support": {
+		"issues": "https://github.com/akeeba/plg_captcha_altcha/issues",
+		"wiki": "https://github.com/akeeba/plg_captcha_altcha/wiki",
+		"security": "https://github.com/akeeba/plg_captcha_altcha/security/policy",
+		"source": "https://github.com/plg_captcha_altcha/panopticon"
+	},
+	"funding": [
+		{
+			"type": "paypal",
+			"url": "https://www.paypal.com/donate/?hosted_button_id=NFUWUURA6X3TS"
 		}
 	],
 	"require": {

@@ -1,0 +1,14 @@
+# https://github.com/browserslist/browserslist#readme
+
+# This mirrors Bootstrap 5 which is included with Joomla 4
+# See https://getbootstrap.com/docs/5.0/getting-started/browsers-devices/
+
+>= 0.5%
+last 2 major versions
+not dead
+Chrome >= 60
+Firefox >= 60
+Firefox ESR
+iOS >= 12
+Safari >= 12
+not Explorer <= 11

@@ -2,21 +2,86 @@
 <project name="CaptchaAltcha" description="ALTCHA Plugin for Joomla!" default="git" >
 	<import file="${phing.dir}/../buildfiles/phing/common.xml" />
 
-	<patternset id="plg_captcha_altcha">
-		<include name="**" />
+	<target name="git" description="Makes only packages, not the documentation"
+			depends="new-release,setup-properties,npm-install,compile-css,compile-javascript,package">
+	</target>
 
-		<exclude name="vendor/altcha-org/.github/**" />
-		<exclude name="vendor/altcha-org/tests/**" />
-		<exclude name="vendor/altcha-org/.gitignore" />
-		<exclude name="vendor/altcha-org/CODE_OF_CONDUCT.md" />
-		<exclude name="vendor/altcha-org/composer.lock" />
-		<exclude name="vendor/altcha-org/CONTRIBUTING.md" />
-		<exclude name="vendor/altcha-org/phpunit.xml.dist" />
-	</patternset>
+	<target name="package" description="Create the installable ZIP package"
+			depends="setup-properties,xml-version">
+		<zipme basedir="${dirs.plugins}/captcha/altcha"
+			   destfile="${dirs.release}/plg_captcha_altcha-${version}.zip"
+			   includeemptydirs="true">
+			<fileset dir="${dirs.plugins}/captcha/altcha">
+				<include name="**" />
 
-	<target name="package-pkg" description="Installation package" depends="new-release, setup-properties, package-plugins" />
+				<exclude name="media/css/altcha.scss" />
+				<exclude name="media/css/altcha.css.map" />
+
+				<exclude name="media/js/altcha.min.js.map" />
+				<exclude name="media/js/worker.min.js.map" />
+
+				<exclude name="vendor/altcha-org/altcha/.github/**" />
+				<exclude name="vendor/altcha-org/altcha/tests/**" />
+				<exclude name="vendor/altcha-org/altcha/.gitignore" />
+				<exclude name="vendor/altcha-org/altcha/CODE_OF_CONDUCT.md" />
+				<exclude name="vendor/altcha-org/altcha/composer.lock" />
+				<exclude name="vendor/altcha-org/altcha/CONTRIBUTING.md" />
+				<exclude name="vendor/altcha-org/altcha/phpunit.xml.dist" />
+			</fileset>
+			<fileset dir="${dirs.root}">
+				<include name="LICENSE.txt" />
+			</fileset>
+		</zipme>
+	</target>
 
 	<target name="documentation" description="The documentation" />
 
 	<target name="docsdeploy" />
+
+	<target name="npm-install" description="Install JavaScript dependencies through NPM, and copy files">
+		<exec executable="npm" dir="${dirs.root}" checkreturn="true">
+			<arg value="install" />
+		</exec>
+
+		<copy file="${dirs.root}/node_modules/altcha/dist_external/altcha.css"
+			  tofile="${dirs.plugins}/captcha/altcha/media/css/altcha.scss" />
+		<copy file="${dirs.root}/node_modules/altcha/dist_external/altcha.js"
+			  tofile="${dirs.plugins}/captcha/altcha/media/js/altcha.js" />
+		<copy file="${dirs.root}/node_modules/altcha/dist_external/worker.js"
+			  tofile="${dirs.plugins}/captcha/altcha/media/js/worker.js" />
+	</target>
+
+	<target name="compile-javascript" description="Transpile and minify JavaScript files">
+		<exec executable="${dirs.root}/../buildfiles/node_modules/.bin/babel"
+			  passthru="true"
+			  dir="${dirs.root}" checkreturn="true">
+			<env key="NODE_PATH" value="${dirs.root}/../buildfiles/node_modules" />
+
+			<arg value="plugins/captcha/altcha/media/js" />
+
+			<arg value="--config-file" />
+			<arg value="${dirs.root}/.babelrc.json" />
+
+			<arg value="--out-dir" />
+			<arg value="plugins/captcha/altcha/media/js" />
+
+			<arg value="--out-file-extension" />
+			<arg value=".min.js" />
+
+			<arg value="--source-maps" />
+		</exec>
+	</target>
+
+	<target name="compile-css" description="Compile SCSS to minified CSS">
+		<exec executable="sass" dir="${dirs.plugins}/captcha/altcha/media/css"
+			  checkreturn="true" passthru="true">
+			<arg value="${dirs.plugins}/captcha/altcha/media/css:${dirs.plugins}/captcha/altcha/media/css" />
+			<arg value="-s" />
+			<arg value="compressed" />
+		</exec>
+	</target>
+
+	<target name="release" depends="github-release">
+		<!-- Dependencies are enough -->
+	</target>
 </project>

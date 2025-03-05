@@ -1,0 +1,12 @@
+{
+  "name": "plg-captcha-altcha",
+  "description": "CAPTCHA - ALTCHA plugin for Joomla! 5",
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/akeeba/plg_captcha_altcha.git"
+  },
+  "dependencies": {
+    "altcha": "^1.2.0"
+  }
+}

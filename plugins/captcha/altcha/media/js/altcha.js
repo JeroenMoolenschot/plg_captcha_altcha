@@ -1,9 +1,3 @@
-/*
- * @package     plg_captcha_altcha
- * @copyright   (C) 2025 Akeeba Ltd
- * @license     GPL-3.0+
- */
-
 var di = Object.defineProperty;
 var Pr = (e) => {
     throw TypeError(e);
