@@ -11,6 +11,7 @@ defined('_JEXEC') || die;
 
 use AltchaOrg\Altcha\Algorithm;
 use AltchaOrg\Altcha\Altcha as AltchaApi;
+use AltchaOrg\Altcha\Challenge;
 use AltchaOrg\Altcha\ChallengeOptions;
 use DateInterval;
 use Joomla\CMS\Application\CMSApplication;
@@ -20,7 +21,11 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\CaptchaField;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Session\Session;
 use Joomla\Event\DispatcherInterface;
+use Joomla\Event\Event;
+use Joomla\Event\SubscriberInterface;
 use Joomla\Session\SessionInterface;
 use JsonException;
 
@@ -29,7 +34,7 @@ use JsonException;
  *
  * @since  1.0.0
  */
-final class Altcha extends CMSPlugin
+final class Altcha extends CMSPlugin implements SubscriberInterface
 {
 	/** @inheritDoc */
 	public function __construct(DispatcherInterface $dispatcher, array $config = [], CMSApplication $app = null)
@@ -38,6 +43,53 @@ final class Altcha extends CMSPlugin
 
 		$this->setApplication($app);
 		$this->processExpiration();
+	}
+
+	public static function getSubscribedEvents(): array
+	{
+		return [
+			'onAjaxAltcha' => 'ajaxHandler',
+		];
+	}
+
+	/**
+	 * Handles the AJAX callback through com_ajax
+	 *
+	 * @param   Event  $e  The event we are handling
+	 *
+	 * @return  void
+	 * @since   1.0.0
+	 */
+	public function ajaxHandler(Event $e)
+	{
+		$id = trim($this->getApplication()->input->getRaw('id', '') ?: '');
+
+		@ob_end_clean();
+
+		header('HTTP/1.1 200 OK');
+		header('Content-Type: application/json');
+
+		if (!Session::checkToken('get') || empty($id))
+		{
+			echo json_encode([]);
+			exit();
+		}
+
+		$challenge     = $this->generateChallenge($id);
+		$challengeJson = json_encode($challenge);
+
+		/**
+		 * Remove the maxnumber variable for improved security.
+		 *
+		 * @link https://altcha.org/docs/server-integration/#creating-a-challenge
+		 */
+		$temp = json_decode($challengeJson, true);
+		unset($temp['maxnumber']);
+		$challengeJson = json_encode($temp);
+
+		echo $challengeJson;
+
+		$this->getApplication()->close();
 	}
 
 	/**
@@ -99,34 +151,10 @@ final class Altcha extends CMSPlugin
 		?string $name = null, string $id = 'altcha_1', string $class = ''
 	): string
 	{
-		$keyHash       = hash('sha256', $id);
 		$autoMode      = $this->params->get('auto', 'onsubmit');
-		$hashAlgorithm = $this->params->get('hash', Algorithm::SHA512);
-		$maxNumber     = $this->params->get('maxnumber', 50000);
-		$saltLength    = $this->params->get('saltlength', 16);
-		$expires       = $this->params->get('expires', 'PT1H');
 		$delay         = $this->params->get('delay', 0);
 		$hideFooter    = $this->params->get('hidefooter', 0) == 1;
 		$hideLogo      = $this->params->get('hidelogo', 0) == 1;
-
-		$options       = new ChallengeOptions(
-			[
-				'algorithm'  => $hashAlgorithm,
-				'saltLength' => $saltLength,
-				'hmacKey'    => $this->getApplication()->get('secret'),
-				'maxNumber'  => $maxNumber,
-				'expires'    => Date::getInstance()->add(new DateInterval($expires)),
-				'params'     => [
-					'keyHash' => $keyHash,
-				],
-			]
-		);
-		$challenge     = AltchaApi::createChallenge($options);
-		$challengeJson = json_encode($challenge);
-
-		Factory::getContainer()
-			->get(SessionInterface::class)
-			->set('altcha_challenge.' . $keyHash, $challengeJson);
 
 		$this->loadLanguage('plg_captcha_altcha');
 
@@ -136,9 +164,8 @@ final class Altcha extends CMSPlugin
 			'name'          => $name,
 			'id'            => $id,
 			'class'         => $class,
-			'challengejson' => $challengeJson,
+			'challengeurl'  => $this->getChallengeUrl($id),
 			'delay'         => $delay,
-			'maxnumber'     => $maxNumber,
 			'strings'       => json_encode(
 				[
 					'ariaLinkLabel' => Text::_('PLG_CAPTCHA_ALTCHA_ARIALINKLABEL'),
@@ -287,6 +314,64 @@ final class Altcha extends CMSPlugin
 	public function onSetupField(CaptchaField $field, \SimpleXMLElement $element)
 	{
 		// No-op, for now.
+	}
+
+	/**
+	 * Generates and returns a URL to generate and return the ALTCHA challenge JSON for a given CAPTCHA field.
+	 *
+	 * @param   string  $id  The ID of the CAPTCHA field.
+	 *
+	 * @return  string  The generated challenge URL.
+	 * @since   1.0.0
+	 */
+	private function getChallengeUrl(string $id = 'altcha_1'): string
+	{
+		return Route::_(
+			sprintf(
+				"index.php?option=com_ajax&plugin=altcha&group=captcha&format=raw&id=%s&%s=1",
+				htmlentities($id, ENT_QUOTES, 'UTF-8'),
+				Session::getFormToken()
+			),
+			xhtml: false,
+			absolute: true
+		);
+	}
+
+	/**
+	 * Generate a chalenge, and store it in the session.
+	 *
+	 * @param   string  $id  The CAPTCHA field ID
+	 *
+	 * @return  Challenge
+	 * @since   1.0.0
+	 */
+	private function generateChallenge(string $id = 'altcha_1'): Challenge
+	{
+		$keyHash       = hash('sha256', $id);
+		$hashAlgorithm = $this->params->get('hash', Algorithm::SHA512);
+		$maxNumber     = $this->params->get('maxnumber', 50000);
+		$saltLength    = $this->params->get('saltlength', 16);
+		$expires       = $this->params->get('expires', 'PT1H');
+
+		$options = new ChallengeOptions(
+			[
+				'algorithm'  => $hashAlgorithm,
+				'saltLength' => $saltLength,
+				'hmacKey'    => $this->getApplication()->get('secret'),
+				'maxNumber'  => $maxNumber,
+				'expires'    => Date::getInstance()->add(new DateInterval($expires)),
+				'params'     => [
+					'keyHash' => $keyHash,
+				],
+			]
+		);
+
+		$challenge = AltchaApi::createChallenge($options);
+		Factory::getContainer()
+			->get(SessionInterface::class)
+			->set('altcha_challenge.' . $keyHash, json_encode($challenge));
+
+		return $challenge;
 	}
 
 	/**

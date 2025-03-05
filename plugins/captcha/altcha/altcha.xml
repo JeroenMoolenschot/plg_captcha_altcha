@@ -99,10 +99,13 @@
                         type="list"
                         label="PLG_CAPTCHA_ALTCHA_FIELD_EXPIRES_LABEL"
                         description="PLG_CAPTCHA_ALTCHA_FIELD_EXPIRES_DESC"
-                        default="PT1H"
+                        default="PT1M"
                         validate="options"
                 >
+                    <option value="PT10S">PLG_CAPTCHA_ALTCHA_FIELD_EXPIRES_OPT_PT10S</option>
+                    <option value="PT30S">PLG_CAPTCHA_ALTCHA_FIELD_EXPIRES_OPT_PT30S</option>
                     <option value="PT1M">PLG_CAPTCHA_ALTCHA_FIELD_EXPIRES_OPT_PT1M</option>
+                    <option value="PT2M">PLG_CAPTCHA_ALTCHA_FIELD_EXPIRES_OPT_PT2M</option>
                     <option value="PT10M">PLG_CAPTCHA_ALTCHA_FIELD_EXPIRES_OPT_PT10M</option>
                     <option value="PT30M">PLG_CAPTCHA_ALTCHA_FIELD_EXPIRES_OPT_PT30M</option>
                     <option value="PT1H">PLG_CAPTCHA_ALTCHA_FIELD_EXPIRES_OPT_PT1H</option>
