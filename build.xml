@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<project name="CaptchaAltcha" description="ALTCHA Plugin for Joomla!" default="git" >
+	<import file="${phing.dir}/../buildfiles/phing/common.xml" />
+
+	<patternset id="plg_captcha_altcha">
+		<include name="**" />
+
+		<exclude name="vendor/altcha-org/.github/**" />
+		<exclude name="vendor/altcha-org/tests/**" />
+		<exclude name="vendor/altcha-org/.gitignore" />
+		<exclude name="vendor/altcha-org/CODE_OF_CONDUCT.md" />
+		<exclude name="vendor/altcha-org/composer.lock" />
+		<exclude name="vendor/altcha-org/CONTRIBUTING.md" />
+		<exclude name="vendor/altcha-org/phpunit.xml.dist" />
+	</patternset>
+
+	<target name="package-pkg" description="Installation package" depends="new-release, setup-properties, package-plugins" />
+
+	<target name="documentation" description="The documentation" />
+
+	<target name="docsdeploy" />
+</project>

@@ -1,0 +1,27 @@
+{
+	"name": "akeeba/plg_captcha_google",
+	"description": "Joomla! plugin to implement ALTCHA, the Open Source, proof-of-work, self-hosted CAPTCHA alternative",
+	"minimum-stability": "stable",
+	"license": "GPL-3.0-or-later",
+	"authors": [
+		{
+			"name": "Nicholas K. Dionysopoulos",
+			"email": "nicholas_NOSPAM@akeeba.com",
+			"homepage": "http://www.akeeba.com",
+			"role": "Lead Developer"
+
+		}
+	],
+	"require": {
+		"php": "^8.1",
+		"ext-simplexml": "*",
+		"altcha-org/altcha": "^0.1.4"
+	},
+	"config": {
+		"vendor-dir": "plugins/captcha/altcha/vendor",
+		"optimize-autoloader": false,
+		"platform": {
+			"php": "8.1.999"
+		}
+	}
+}

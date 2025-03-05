@@ -1,0 +1,33 @@
+{
+	"$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+	"name": "plg_captcha_altcha",
+	"version": "1.0.0",
+	"description": "CAPTCHA - ALTCHA",
+	"license": "GPL-3.0-or-later",
+	"assets": [
+		{
+			"name": "plg_captcha_altcha.altcha",
+			"description": "ALTCHA CSS",
+			"type": "style",
+			"uri": "plg_captcha_altcha/altcha.css"
+		},
+		{
+			"name": "plg_captcha_altcha.altcha",
+			"description": "ALTCHA JavaScript",
+			"type": "script",
+			"uri": "plg_captcha_altcha/altcha.min.js",
+			"attributes": {
+				"defer": true,
+				"type": "module"
+			}
+		},
+		{
+			"name": "plg_captcha_altcha.altcha",
+			"type": "preset",
+			"dependencies": [
+				"plg_captcha_altcha.altcha#style",
+				"plg_captcha_altcha.altcha#script"
+			]
+		}
+	]
+}

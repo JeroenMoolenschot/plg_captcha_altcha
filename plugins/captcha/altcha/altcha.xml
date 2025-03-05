@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="captcha" method="upgrade">
+    <name>plg_captcha_altcha</name>
+    <version>1.0.0</version>
+    <creationDate>2024-10-18</creationDate>
+    <author>Akeeba Ltd</author>
+    <authorEmail>nicholas_NOSPAM@akeeba.com</authorEmail>
+    <authorUrl>https://www.akeeba.com</authorUrl>
+    <copyright>(C) 2025 Akeeba Ltd</copyright>
+    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
+    <description>PLG_CAPTCHA_ALTCHA_XML_DESCRIPTION</description>
+    <namespace path="src">Akeeba\Plugin\Captcha\Altcha</namespace>
+
+    <files>
+        <folder plugin="altcha">services</folder>
+        <folder>src</folder>
+        <folder>vendor</folder>
+    </files>
+
+    <media folder="media" destination="plg_captcha_altcha">
+        <folder>js</folder>
+        <folder>css</folder>
+    </media>
+
+    <languages>
+        <language tag="en-GB">language/en-GB/plg_captcha_altcha.ini</language>
+        <language tag="en-GB">language/en-GB/plg_captcha_altcha.sys.ini</language>
+    </languages>
+
+    <updateservers>
+        <server type="extension" priority="1" name="CAPTCHA - ALTCHA Updates">
+            <![CDATA[https://raw.githubusercontent.com/akeeba/plg_captcha_altcha/main/update/update.xml]]>
+        </server>
+    </updateservers>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+
+                <field
+                        name="note1"
+                        type="note"
+                        class="alert alert-info"
+                        label="PLG_CAPTCHA_ALTCHA_MADE_IN_EU"
+                        description="PLG_CAPTCHA_ALTCHA_MADE_IN_EU_INFO"
+                />
+
+                <field
+                        name="auto"
+                        type="list"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_AUTO_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_AUTO_DESC"
+                        default="onsubmit"
+                        validate="options"
+                >
+                    <option value="off">PLG_CAPTCHA_ALTCHA_FIELD_AUTO_OPT_OFF</option>
+                    <option value="onfocus">PLG_CAPTCHA_ALTCHA_FIELD_AUTO_OPT_ONFOCUS</option>
+                    <option value="onload">PLG_CAPTCHA_ALTCHA_FIELD_AUTO_OPT_ONLOAD</option>
+                    <option value="onsubmit">PLG_CAPTCHA_ALTCHA_FIELD_AUTO_OPT_ONSUBMIT</option>
+                </field>
+
+                <field
+                        name="hash"
+                        type="list"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_HASH_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_HASH_DESC"
+                        default="SHA-512"
+                        validate="options"
+                >
+                    <option value="SHA-1">PLG_CAPTCHA_ALTCHA_FIELD_HASH_OPT_SHA1</option>
+                    <option value="SHA-256">PLG_CAPTCHA_ALTCHA_FIELD_HASH_OPT_SHA256</option>
+                    <option value="SHA-512">PLG_CAPTCHA_ALTCHA_FIELD_HASH_OPT_SHA512</option>
+                </field>
+
+                <field
+                        name="maxnumber"
+                        type="number"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_MAXNUMBER_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_MAXNUMBER_DESC"
+                        default="50000"
+                        min="1000"
+                        max="1000000"
+                        filter="integer"
+                />
+
+                <field
+                        name="saltlength"
+                        type="number"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_SALTLENGTH_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_SALTLENGTH_DESC"
+                        default="16"
+                        min="12"
+                        max="64"
+                        filter="integer"
+                />
+
+                <field
+                        name="expires"
+                        type="list"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_EXPIRES_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_EXPIRES_DESC"
+                        default="PT1H"
+                        validate="options"
+                >
+                    <option value="PT1M">PLG_CAPTCHA_ALTCHA_FIELD_EXPIRES_OPT_PT1M</option>
+                    <option value="PT10M">PLG_CAPTCHA_ALTCHA_FIELD_EXPIRES_OPT_PT10M</option>
+                    <option value="PT30M">PLG_CAPTCHA_ALTCHA_FIELD_EXPIRES_OPT_PT30M</option>
+                    <option value="PT1H">PLG_CAPTCHA_ALTCHA_FIELD_EXPIRES_OPT_PT1H</option>
+                    <option value="PT2H">PLG_CAPTCHA_ALTCHA_FIELD_EXPIRES_OPT_PT2H</option>
+                    <option value="PT6H">PLG_CAPTCHA_ALTCHA_FIELD_EXPIRES_OPT_PT6H</option>
+                    <option value="PT12H">PLG_CAPTCHA_ALTCHA_FIELD_EXPIRES_OPT_PT12H</option>
+                    <option value="P1D">PLG_CAPTCHA_ALTCHA_FIELD_EXPIRES_OPT_P1D</option>
+                </field>
+
+                <field
+                        name="delay"
+                        type="number"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_DELAY_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_DELAY_DESC"
+                        default="0"
+                        min="0"
+                        max="10000"
+                        filter="integer"
+                />
+
+                <field
+                        name="hidefooter"
+                        type="radio"
+                        layout="joomla.form.field.radio.switcher"
+                        default="0"
+                        filter="integer"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_HIDEFOOTER_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_HIDEFOOTER_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field
+                        name="hidelogo"
+                        type="radio"
+                        layout="joomla.form.field.radio.switcher"
+                        default="0"
+                        filter="integer"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_HIDELOGO_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_HIDELOGO_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+            </fieldset>
+        </fields>
+    </config>
+</extension>
