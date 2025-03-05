@@ -148,6 +148,200 @@
                 </field>
 
             </fieldset>
+
+            <fieldset name="advanced">
+
+                <field
+                        name="custom_css"
+                        type="radio"
+                        layout="joomla.form.field.radio.switcher"
+                        default="0"
+                        filter="integer"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_CUSTOM_CSS_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_CUSTOM_CSS_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field
+                        name="border_width"
+                        type="text"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_BORDER_WIDTH_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_BORDER_WIDTH_DESC"
+                        default="1px"
+                        showon="custom_css:1"
+                />
+
+                <field
+                        name="border_radius"
+                        type="text"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_BORDER_RADIUS_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_BORDER_RADIUS_DESC"
+                        default="3px"
+                        showon="custom_css:1"
+                />
+
+                <field
+                        name="maximum_width"
+                        type="text"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_MAX_WIDTH_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_MAX_WIDTH_DESC"
+                        default="260px"
+                        showon="custom_css:1"
+                />
+
+                <field
+                        name="color_base"
+                        type="color"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_BASE_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_BASE_DESC"
+                        default="#ffffff"
+                        keywords="transparent,initial,inherit,currentColor"
+                        showon="custom_css:1"
+                />
+
+                <field
+                        name="color_border"
+                        type="color"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_BORDER_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_BORDER_DESC"
+                        default="#a0a0a0"
+                        keywords="transparent,initial,inherit,currentColor"
+                        showon="custom_css:1"
+                />
+
+                <field
+                        name="color_text"
+                        type="color"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_TEXT_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_TEXT_LABEL_DESC"
+                        default="currentcolor"
+                        keywords="transparent,initial,inherit,currentcolor"
+                        showon="custom_css:1"
+                />
+
+                <field
+                        name="color_border_focus"
+                        type="color"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_BORDER_FOCUS_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_BORDER_FOCUS_DESC"
+                        default="currentcolor"
+                        keywords="transparent,initial,inherit,currentcolor"
+                        showon="custom_css:1"
+                />
+
+                <field
+                        name="color_error_text"
+                        type="color"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_ERROR_TEXT_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_ERROR_TEXT_DESC"
+                        default="#f23939"
+                        keywords="transparent,initial,inherit,currentcolor"
+                        showon="custom_css:1"
+                />
+
+                <field
+                        name="color_footer_bg"
+                        type="color"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_FOOTER_BG_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_FOOTER_BG_DESC"
+                        default="#f4f4f4"
+                        keywords="transparent,initial,inherit,currentcolor"
+                        showon="custom_css:1"
+                />
+
+                <field
+                        name="spacer1"
+                        type="spacer"
+                        hr="true"
+                />
+
+                <field
+                        name="custom_css_dark"
+                        type="radio"
+                        layout="joomla.form.field.radio.switcher"
+                        default="0"
+                        filter="integer"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_CUSTOM_CSS_DARK_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_CUSTOM_CSS_DARK_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field
+                        name="color_base_dark"
+                        type="color"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_BASE_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_BASE_DESC"
+                        default="#222222"
+                        keywords="transparent,initial,inherit,currentColor"
+                        showon="custom_css_dark:1"
+                />
+
+                <field
+                        name="color_border_dark"
+                        type="color"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_BORDER_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_BORDER_DESC"
+                        default="#a0a0a0"
+                        keywords="transparent,initial,inherit,currentColor"
+                        showon="custom_css_dark:1"
+                />
+
+                <field
+                        name="color_text_dark"
+                        type="color"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_TEXT_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_TEXT_LABEL_DESC"
+                        default="currentcolor"
+                        keywords="transparent,initial,inherit,currentcolor"
+                        showon="custom_css_dark:1"
+                />
+
+                <field
+                        name="color_border_focus_dark"
+                        type="color"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_BORDER_FOCUS_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_BORDER_FOCUS_DESC"
+                        default="currentcolor"
+                        keywords="transparent,initial,inherit,currentcolor"
+                        showon="custom_css_dark:1"
+                />
+
+                <field
+                        name="color_error_text_dark"
+                        type="color"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_ERROR_TEXT_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_ERROR_TEXT_DESC"
+                        default="#f23939"
+                        keywords="transparent,initial,inherit,currentcolor"
+                        showon="custom_css_dark:1"
+                />
+
+                <field
+                        name="color_footer_bg_dark"
+                        type="color"
+                        label="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_FOOTER_BG_LABEL"
+                        description="PLG_CAPTCHA_ALTCHA_FIELD_COLOR_FOOTER_BG_DESC"
+                        default="#393939"
+                        keywords="transparent,initial,inherit,currentcolor"
+                        showon="custom_css_dark:1"
+                />
+
+                <field
+                        name="spacer2"
+                        type="spacer"
+                        hr="true"
+                />
+
+                <field
+                        name="note2"
+                        type="note"
+                        heading="h3"
+                        label="PLG_CAPTCHA_ALTCHA_CUSTOMISE_LANGUAGE_HEAD"
+                        description="PLG_CAPTCHA_ALTCHA_CUSTOMISE_LANGUAGE_INFO"
+                />
+            </fieldset>
         </fields>
     </config>
 </extension>

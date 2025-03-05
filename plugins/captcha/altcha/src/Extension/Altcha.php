@@ -50,6 +50,15 @@ final class Altcha extends CMSPlugin
 	 */
 	public function onInit(string $id = 'altcha_1'): bool
 	{
+		static $initialised = false;
+
+		if ($initialised)
+		{
+			return true;
+		}
+
+		$initialised = true;
+
 		$app = $this->getApplication();
 
 		if (!$app instanceof CMSWebApplicationInterface)
@@ -64,8 +73,14 @@ final class Altcha extends CMSPlugin
 			$wam->getRegistry()->addExtensionRegistryFile('plg_captcha_altcha');
 		}
 
-		$wam
-			->usePreset('plg_captcha_altcha.altcha');
+		$wam->usePreset('plg_captcha_altcha.altcha');
+
+		$css = ($this->getCSS(false) ?: '') . ($this->getCSS(true) ?: '');
+
+		if (!empty($css))
+		{
+			$wam->addInlineStyle($css);
+		}
 
 		return true;
 	}
@@ -232,10 +247,14 @@ final class Altcha extends CMSPlugin
 
 		if (
 			!is_object($challenge)
-		    || !isset($challenge->algorithm) || empty($challenge->algorithm)
-		       || !isset($challenge->challenge) || empty($challenge->challenge)
-		       || !isset($challenge->salt) || empty($challenge->salt)
-		       || !isset($challenge->signature) || empty($challenge->signature))
+			|| !isset($challenge->algorithm)
+			|| empty($challenge->algorithm)
+			|| !isset($challenge->challenge)
+			|| empty($challenge->challenge)
+			|| !isset($challenge->salt)
+			|| empty($challenge->salt)
+			|| !isset($challenge->signature)
+			|| empty($challenge->signature))
 		{
 			return false;
 		}
@@ -378,4 +397,55 @@ final class Altcha extends CMSPlugin
 		return implode($outerGlue, $output);
 	}
 
+	private function getCSS(bool $darkMode = false): ?string
+	{
+		$suffix  = $darkMode ? '_dark' : '';
+		$enabled = $this->params->get('custom_css' . $suffix, 0);
+
+		if (!$enabled)
+		{
+			return null;
+		}
+
+		$controls = [
+			'border_width',
+			'border_radius',
+			'maximum_width',
+			'color_base',
+			'color_border',
+			'color_text',
+			'color_border_focus',
+			'color_error_text',
+			'color_footer_bg',
+		];
+
+		$css = '';
+
+		foreach ($controls as $key)
+		{
+			$value = $this->params->get($key . $suffix, null);
+			$value = (is_string($value) ? trim($value) : null) ?: null;
+
+			if (empty($value))
+			{
+				continue;
+			}
+
+			$css .= sprintf("--altcha-%s: %s;", str_replace('_', '-', $key), $value);
+		}
+
+		if (empty($css))
+		{
+			return null;
+		}
+
+		$css = ':root{color-scheme: light dark;' . $css . '}';
+
+		if ($darkMode)
+		{
+			$css = '@media(prefers-color-scheme: dark){' . $css . '}';
+		}
+
+		return $css;
+	}
 }
