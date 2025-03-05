@@ -50,7 +50,7 @@
                         type="list"
                         label="PLG_CAPTCHA_ALTCHA_FIELD_AUTO_LABEL"
                         description="PLG_CAPTCHA_ALTCHA_FIELD_AUTO_DESC"
-                        default="onsubmit"
+                        default="onfocus"
                         validate="options"
                 >
                     <option value="off">PLG_CAPTCHA_ALTCHA_FIELD_AUTO_OPT_OFF</option>

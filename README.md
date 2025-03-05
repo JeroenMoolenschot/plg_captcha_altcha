@@ -1,11 +1,12 @@
 # ALTCHA for Joomla!
 
 [![Downloads](https://img.shields.io/github/downloads/akeeba/plg_captcha_altcha/latest/total?sort=semver&style=for-the-badge&logoColor=%23ffffff&label=Download
-)](https://github.com/akeeba/plg_captcha_altcha/releases)
+)](https://github.com/akeeba/plg_captcha_altcha/releases) &nbsp; [![Documentation wiki](https://img.shields.io/badge/wiki-wiki?style=for-the-badge&label=documentation)](https://github.com/akeeba/plg_captcha_altcha/wiki)
+
 
 Joomla! plugin to implement ALTCHA, the Open Source, proof-of-work, self-hosted CAPTCHA alternative
 
-Copyright (C) 2025 Nicholas K. Dionysopoulos
+Copyright (C) 2025 Akeeba Ltd
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
