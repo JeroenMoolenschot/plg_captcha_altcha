@@ -2,7 +2,7 @@
 <extension type="plugin" group="captcha" method="upgrade">
     <name>plg_captcha_altcha</name>
     <version>1.0.0</version>
-    <creationDate>2024-10-18</creationDate>
+    <creationDate>2025-03-07</creationDate>
     <author>Akeeba Ltd</author>
     <authorEmail>nicholas_NOSPAM@akeeba.com</authorEmail>
     <authorUrl>https://www.akeeba.com</authorUrl>
