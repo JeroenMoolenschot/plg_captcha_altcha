@@ -3,7 +3,7 @@
 	<import file="${phing.dir}/../buildfiles/phing/common.xml" />
 
 	<target name="git" description="Makes only packages, not the documentation"
-			depends="new-release,setup-properties,npm-install,compile-css,compile-javascript,package">
+			depends="new-release,setup-properties,npm-install,compile-css,package">
 	</target>
 
 	<target name="package" description="Create the installable ZIP package"
@@ -47,29 +47,12 @@
 			  tofile="${dirs.plugins}/captcha/altcha/media/css/altcha.scss" />
 		<copy file="${dirs.root}/node_modules/altcha/dist_external/altcha.js"
 			  tofile="${dirs.plugins}/captcha/altcha/media/js/altcha.js" />
+		<copy file="${dirs.root}/node_modules/altcha/dist_external/altcha.js"
+			  tofile="${dirs.plugins}/captcha/altcha/media/js/altcha.min.js" />
 		<copy file="${dirs.root}/node_modules/altcha/dist_external/worker.js"
 			  tofile="${dirs.plugins}/captcha/altcha/media/js/worker.js" />
-	</target>
-
-	<target name="compile-javascript" description="Transpile and minify JavaScript files">
-		<exec executable="${dirs.root}/../buildfiles/node_modules/.bin/babel"
-			  passthru="true"
-			  dir="${dirs.root}" checkreturn="true">
-			<env key="NODE_PATH" value="${dirs.root}/../buildfiles/node_modules" />
-
-			<arg value="plugins/captcha/altcha/media/js" />
-
-			<arg value="--config-file" />
-			<arg value="${dirs.root}/.babelrc.json" />
-
-			<arg value="--out-dir" />
-			<arg value="plugins/captcha/altcha/media/js" />
-
-			<arg value="--out-file-extension" />
-			<arg value=".min.js" />
-
-			<arg value="--source-maps" />
-		</exec>
+		<copy file="${dirs.root}/node_modules/altcha/dist_external/worker.js"
+			  tofile="${dirs.plugins}/captcha/altcha/media/js/worker.min.js" />
 	</target>
 
 	<target name="compile-css" description="Compile SCSS to minified CSS">

@@ -20,6 +20,7 @@
     <media folder="media" destination="plg_captcha_altcha">
         <folder>js</folder>
         <folder>css</folder>
+        <filename>joomla.asset.json</filename>
     </media>
 
     <languages>
